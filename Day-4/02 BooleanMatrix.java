@@ -1,24 +1,10 @@
 import java.util.Scanner;
-class Main {
-     static void BooleanMatrix(int[][] matrix,int m,int n){
-         boolean firstRowHasOne =false;
-         boolean firstColHasOne =false;
-         //check 1st row and 1st column has one 
-         for (int j = 0; j < n; j++) {
-            if (matrix[0][j] == 1) {
-                firstRowHasOne = true;
-                break;
-            }
-        }
-        for (int i = 0; i < m; i++) {
-            if (matrix[i][0] == 1) {
-                firstColHasOne = true;
-                break;
-            }
-        }
-        //Mark matrix using 1st row &colum
-        for (int i = 1; i < m; i++) {
-            for (int j = 1; j < n; j++) {
+class Matrix{
+    //space optimize code
+    static void BooleanMatrix(int[][] matrix,int r,int c){
+         //Mark matrix using 1st row &colum
+        for (int i = 1; i < r; i++) {
+            for (int j = 1; j < c; j++) {
                 if (matrix[i][j] == 1) {
                     matrix[i][0] = 1; // Mark the first column of this row
                     matrix[0][j] = 1; // Mark the first row of this column
@@ -26,63 +12,66 @@ class Main {
             }
         }
         //update matrix based on marks in 1st row & col
-        for (int i = 1; i < m; i++) {
-            for (int j = 1; j < n; j++) {
+        for (int i = 1; i < r; i++) {
+            for (int j = 1; j < c; j++) {
                 if (matrix[i][0] == 1 || matrix[0][j] == 1) {
                     matrix[i][j] = 1;
                 }
             }
         }
-        //update 1st row & 1st column 
-        if (firstRowHasOne) {
-            for (int j = 0; j < n; j++) {
-                matrix[0][j] = 1;
+        //update 1st row 
+        if(matrix[0][0]==1){
+            for(int j=0;j<c;j++){
+                matrix[0][j]=1;
             }
         }
-        if (firstColHasOne) {
-            for (int i = 0; i < m; i++) {
-                matrix[i][0] = 1;
+        //update 1st col
+        if(matrix[0][0]==1){
+            for(int i=0;i<r;i++){
+                matrix[i][0]=1;
             }
         }
          
     }
     /*
-    //bruteforce -O(m*n)
-    static void BooleanMatrix(int[][] matrix,int m,int n){
-        boolean[] rows  = new boolean[m];
-        boolean[] colums  = new boolean[n];
-        for(int i=0;i<m;i++){
-           for(int j=0;j<n;j++){
+    //brute force
+    static void BooleanMatrix(int[][]matrix,int r,int c){
+        int[] rowMarker = new int[r];
+        int[] colMarker =new int[c];
+        //mark row and column has 1
+        for(int i=0;i<r;i++){
+            for(int j=0;j<c;j++){
                 if(matrix[i][j]==1){
-                    rows[i]=true;
-                    colums[j]=true;
-                    }
+                    rowMarker[i]=1;
+                    colMarker[j]=1;
                 }
             }
-        
-        
-        //Update
-        for(int i=0;i<m;i++){
-           if(rows[i]){
-               for(int j=0;j<n;j++){
-                   matrix[i][j]=1;
-               }
-           }
         }
-        for(int j=0;j<n;j++){
-           if(colums[j]){
-               for(int i=0;i<m;i++){
-                   matrix[i][j]=1;
-               }
-           }
+        //update rows
+        //traverse through rowMarker Array
+        for(int i=0;i<r;i++){
+            if(rowMarker[i]==1){
+                //traverse through columns due to update same row column will change
+                for(int j=0;j<c;j++){
+                    matrix[i][j]=1;
+                }
+            }
         }
-         
+        //update columns
+        //traverse through columMarker Array
+        for(int i=0;i<c;i++){
+            if(colMarker[i]==1){
+                //traverse through rows due to update same column row will change
+                for(int j=0;j<r;j++){
+                    matrix[j][i]=1;
+                }
+            }
+        }
     }
     */
-        
-        
-        
+
     public static void main(String[] args) {
+        
         Scanner sc =new Scanner(System.in);
         int m = sc.nextInt();
         int n = sc.nextInt();
