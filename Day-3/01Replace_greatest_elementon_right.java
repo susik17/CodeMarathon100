@@ -2,29 +2,7 @@ import java.util.Scanner;
 class Main {
     /* 
     //bruteforce - O(n^2)
-    static int max(int[] arr,int j,int n){
-        int max_no=arr[j];
-        for(int k=j;k<=n;k++){
-            if(arr[k]>max_no){
-                max_no=arr[k];
-            }
-        }
-        return max_no;
-    }
-    static int[] replace_greatest_right(int[] arr,int n){
-        for(int i=0;i<=n-1;i++){
-            int j=i+1;
-            if(j>n-1){
-                arr[i]=-1;
-            }
-            else{
-            arr[i]=max(arr,j,n-1);
-            }
-            
-        }
-        return arr;
-        
-    }
+    
     */
     //optimal O(n)
     //Traverse from right to left
