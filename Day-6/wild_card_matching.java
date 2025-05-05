@@ -1,4 +1,3 @@
-import java.util.*; 
 
 class Solution {
     //2.memoization 
@@ -70,7 +69,70 @@ class Solution {
          //case 3:not matching 
          return false;
      }
-    */
+    //3.Using Tabulation
+    public static boolean wildCardMatching(String s, String p) {
+        int m = s.length(), n = p.length();
+        boolean[][] dp = new boolean[m + 1][n + 1];
+
+        // Base case: empty string matches empty pattern
+        dp[0][0] = true;
+
+        // Initialize first row for patterns starting with '*'
+        for (int j = 1; j <= n; j++) {
+            if (p.charAt(j - 1) == '*') {
+                dp[0][j] = dp[0][j - 1];
+            }
+        }
+
+        // Fill the DP table
+        for (int i = 1; i <= m; i++) {
+            for (int j = 1; j <= n; j++) {
+                if (s.charAt(i - 1) == p.charAt(j - 1) || p.charAt(j - 1) == '?') {
+                    dp[i][j] = dp[i - 1][j - 1];
+                } else if (p.charAt(j - 1) == '*') {
+                    dp[i][j] = dp[i - 1][j] || dp[i][j - 1];
+                } else {
+                    dp[i][j] = false;
+                }
+            }
+        }
+        return dp[m][n];
+    }
+    //4.Using TAbulation with Space optimization
+    public static boolean wildCardMatching(String s, String p) {
+        int m = s.length(), n = p.length();
+        boolean[] prev = new boolean[n + 1];
+        boolean[] curr = new boolean[n + 1];
+
+        // Base case: empty string matches empty pattern
+        prev[0] = true;
+
+        // Initialize first row for patterns starting with '*'
+        for (int j = 1; j <= n; j++) {
+            if (p.charAt(j - 1) == '*') {
+                prev[j] = prev[j - 1];
+            }
+        }
+
+        // Process the string and pattern
+        for (int i = 1; i <= m; i++) {
+            curr[0] = false; // Empty pattern cannot match a non-empty string
+            for (int j = 1; j <= n; j++) {
+                if (s.charAt(i - 1) == p.charAt(j - 1) || p.charAt(j - 1) == '?') {
+                    curr[j] = prev[j - 1];
+                } else if (p.charAt(j - 1) == '*') {
+                    curr[j] = prev[j] || curr[j - 1];
+                } else {
+                    curr[j] = false;
+                }
+            }
+            System.arraycopy(curr, 0, prev, 0, n + 1); // Move current row to previous row
+        }
+
+        return curr[n];
+    }
+     */
+    
      public static boolean wildCardMatching(String s, String p) {
         // Write your code here... 
         int m = s.length();
